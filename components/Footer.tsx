@@ -10,15 +10,6 @@ export default function Footer() {
       <div className="footer-container">
         <div className="footer-main">
           <div className="footer-brand">
-            <Link href="/" className="logo">
-              <Image
-                src="/new-logo.png"
-                alt="Trekkers Heaven"
-                width={180}
-                height={40}
-                className="logo-img logo-img-footer"
-              />
-            </Link>
             <Link href="/" className="logo logo-secondary-link" aria-label="Trekkers Heaven - Explore the Unknown">
               <Image
                 src="/secondary-logo.png"
@@ -54,13 +45,22 @@ export default function Footer() {
           </div>
           <div className="footer-badges">
             <h4>Certifications</h4>
-            <Image
-              src="/certifications.png"
-              alt="Certifications"
-              width={120}
-              height={60}
-              className="footer-badge-img"
-            />
+            <div className="footer-cert-row">
+              <Image
+                src="/himachal-tourism-logo-cert.png"
+                alt="Himachal Tourism Registered"
+                width={80}
+                height={74}
+                className="footer-badge-img"
+              />
+              <Image
+                src="/msme-logo-cert.png"
+                alt="MSME / Udyam Registered"
+                width={120}
+                height={17}
+                className="footer-badge-img"
+              />
+            </div>
             <h4>Recommended by</h4>
             <Image
               src="/recommended-by.gif"

@@ -7,8 +7,8 @@
 export const PRIMARY_PHONE = '8679891049';
 /** Secondary phone number (no country code) */
 export const SECONDARY_PHONE = '7668591049';
-/** Number used for WhatsApp queries (same as primary) */
-export const WHATSAPP_QUERY_NUMBER = '8679891049';
+/** Number used for WhatsApp queries (Start Chat / WhatsApp widgets) */
+export const WHATSAPP_QUERY_NUMBER = '7668591049';
 
 /** Country code for India */
 const COUNTRY_CODE = '91';
@@ -32,7 +32,7 @@ export const WHATSAPP_DISPLAY = PRIMARY_DISPLAY;
 export const TEL_URL = TEL_PRIMARY_URL;
 
 /** Primary contact email (single source for footer, contact page, structured data) */
-export const EMAIL_ADDRESS = 'Trekkersheavenuk@gmail.com';
+export const EMAIL_ADDRESS = 'Trekkersheaven@zohomail.in';
 /** mailto: link for the primary email */
 export const EMAIL_URL = `mailto:${EMAIL_ADDRESS}`;
 

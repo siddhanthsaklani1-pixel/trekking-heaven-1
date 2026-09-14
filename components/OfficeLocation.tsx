@@ -49,13 +49,26 @@ export default function OfficeLocation() {
           </div>
 
           <div className="office-location-map-wrapper">
-            <Image
-              src="/office-image.jpg"
-              alt="Trekkers Heaven Office"
-              fill
-              className="office-location-image"
-              style={{ objectFit: 'cover' }}
-            />
+            <div className="office-location-photos">
+              <div className="office-location-photo">
+                <Image
+                  src="/office-photo-1.jpg"
+                  alt="Trekkers Heaven office building — Saklani's Plaza, Dehradun"
+                  fill
+                  className="office-location-image"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <div className="office-location-photo">
+                <Image
+                  src="/office-photo-2.jpg"
+                  alt="Trekkers Heaven office signboard"
+                  fill
+                  className="office-location-image"
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>

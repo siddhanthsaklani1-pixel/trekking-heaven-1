@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import { Star, ChevronDown } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { defaultReviewsData, type ReviewsData } from '@/lib/reviews-data';
 import TravelerMoments from './TravelerMoments';
 
@@ -115,11 +115,6 @@ export default function ReviewsSection({ data }: ReviewsSectionProps) {
           </article>
         ))}
       </div>
-
-      <button type="button" className="reviews-read-all">
-        Read all reviews
-        <ChevronDown size={18} />
-      </button>
     </section>
   );
 }

@@ -29,7 +29,7 @@ import { WHATSAPP_URL, WHATSAPP_DISPLAY, TEL_URL } from '@/lib/constants';
 export const metadata: Metadata = {
   title: 'Trekking Packages | Himalayan Expeditions & Leisure Tours | Trekkers Heaven',
   description:
-    'Explore our trekking packages: Chopta Tungnath, Hampta Pass, Kedarkantha, Kuari Pass. Manali–Kasol leisure package. Inclusions, rental gear, booking policy & best time to trek.',
+    'Explore our trekking packages: Chopta Tungnath, Kedarkantha, Kuari Pass. Manali–Kasol leisure package. Inclusions, rental gear, booking policy & best time to trek.',
 };
 
 const inclusionIcons: Record<string, React.ElementType> = {

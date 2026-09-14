@@ -23,17 +23,6 @@ export const coreExpeditions: ExpeditionPackage[] = [
     pdfUrl: 'https://drive.google.com/file/d/15IqF1CC-PL46A_-x5wEEXwkqsMe8fe4k/view?usp=sharing',
   },
   {
-    id: 'hampta-chandrataal',
-    title: 'Hampta Pass & Chandrataal',
-    region: 'Himachal Pradesh',
-    duration: '5D/4N',
-    altitude: '14,101 ft',
-    highlights: ['Manali to Lahaul transition', 'Chandrataal Lake'],
-    slug: 'hampta-pass-trek',
-    image: 'https://images.unsplash.com/photo-1682687220742-aba13b6e50ba?w=600&q=80',
-    pdfUrl: 'https://drive.google.com/file/d/1Nqj3q6u2Sa4gx2Qgg6eQRvLhfDa9qo_H/view?usp=sharing',
-  },
-  {
     id: 'kedarkantha',
     title: 'Kedarkantha Trek',
     region: 'Uttarakhand',

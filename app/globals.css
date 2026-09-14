@@ -322,10 +322,6 @@ button:focus-visible {
   object-fit: contain;
 }
 
-.logo-img-footer {
-  /* Red logo on dark red footer - no filter needed */
-}
-
 .nav-links {
   display: flex;
   align-items: center;
@@ -1252,25 +1248,6 @@ button:focus-visible {
   object-fit: cover;
 }
 
-.reviews-read-all {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-xs);
-  margin-top: var(--space-lg);
-  padding: 0;
-  background: none;
-  border: none;
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  color: var(--color-secondary);
-  cursor: pointer;
-  transition: color var(--transition-fast);
-}
-
-.reviews-read-all:hover {
-  color: var(--color-primary);
-}
-
 @media (max-width: 768px) {
   .reviews-summary {
     grid-template-columns: 1fr;
@@ -1319,11 +1296,6 @@ button:focus-visible {
     overflow-x: auto;
     padding-bottom: var(--space-xs);
     gap: var(--space-sm);
-  }
-
-  .reviews-read-all {
-    width: 100%;
-    justify-content: center;
   }
 
   .review-text,
@@ -2974,6 +2946,26 @@ button:focus-visible {
   background: var(--color-bg-alt);
 }
 
+.office-location-photos {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+}
+
+.office-location-photo {
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .office-location-photos {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+}
+
 .office-location-map {
   position: absolute;
   inset: 0;
@@ -3819,8 +3811,7 @@ button:focus-visible {
 
 .footer-brand .logo-secondary-link {
   display: block;
-  margin-top: var(--space-md);
-  margin-bottom: 0;
+  margin-top: 0;
 }
 
 .footer-brand .secondary-logo-img {
@@ -3869,6 +3860,20 @@ button:focus-visible {
 
 .footer-contact a:hover {
   text-decoration: underline;
+}
+
+.footer-cert-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.footer-cert-row .footer-badge-img {
+  margin-bottom: 0;
+  background: #fff;
+  padding: 4px;
 }
 
 .footer-badge-img {
@@ -4365,11 +4370,6 @@ button:focus-visible {
     min-height: 32px;
     display: flex;
     align-items: center;
-  }
-
-  .reviews-read-all {
-    min-height: 44px;
-    padding: var(--space-md) var(--space-lg);
   }
 
   .office-location-cta {
