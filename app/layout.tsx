@@ -15,11 +15,11 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Trekkers Heaven | Top Himalayan Treks 2025 | Adventure Trekking Tours',
+    default: 'Trekkers Heaven | Top Himalayan Treks 2026 | Adventure Trekking Tours',
     template: `%s | ${SITE_NAME}`,
   },
   description:
-    'Top Himalayan Treks 2025 — Adventure trekking tours with experienced local guides. Your journey to the mountains starts here.',
+    'Top Himalayan Treks 2026 — Adventure trekking tours with experienced local guides. Your journey to the mountains starts here.',
   openGraph: {
     siteName: SITE_NAME,
     type: 'website',

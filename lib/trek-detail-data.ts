@@ -179,10 +179,10 @@ const detailBySlug: Record<string, Partial<TrekDetail>> = {
   'chopta-tungnath-trek': {
     pdfUrl: 'https://drive.google.com/file/d/15IqF1CC-PL46A_-x5wEEXwkqsMe8fe4k/view?usp=sharing',
     itinerary: [
-      { day: 1, title: 'Dehradun to Sari Village (Base Camp)', description: ['Drive: 7-8 hours'], altitude: '6,600 ft' },
+      { day: 1, title: 'Delhi/Rishikesh to Sari Village (Base Camp)', description: ['Drive: 7-8 hours'], altitude: '6,600 ft' },
       { day: 2, title: 'Sari to Deoriatal and back', description: ['Trek: 2-3 hours'], altitude: '7,800 ft' },
       { day: 3, title: 'Sari to Chopta -> Tungnath -> Chandrashila -> Chopta', description: ['Trek: 5-6 hours'], altitude: '13,100 ft' },
-      { day: 4, title: 'Chopta to Dehradun', description: ['Drive: 7 hours'], altitude: '—' },
+      { day: 4, title: 'Chopta to Delhi/Rishikesh', description: ['Drive: 7 hours'], altitude: '—' },
     ],
     rentalGear: STANDARD_RENTAL_GEAR,
   },
@@ -270,9 +270,6 @@ const detailBySlug: Record<string, Partial<TrekDetail>> = {
     pricePerPerson: 'On Request',
     pdfUrl: 'https://drive.google.com/file/d/10cAKhi34oyKksMfwBx_yyeP8_nKZd1ry/view?usp=drive_link',
     gallery: ['/treks-cards-images/kedarnath-badrinath-yatra.jpg'],
-  },
-  'hampta-pass-trek': {
-    pdfUrl: 'https://drive.google.com/file/d/1Nqj3q6u2Sa4gx2Qgg6eQRvLhfDa9qo_H/view?usp=sharing',
   },
   'kuari-pass-trek': {
     pdfUrl: 'https://drive.google.com/file/d/1s_ol0yVpZvEt5t4Kze0_L6_46fcYn7b5/view?usp=sharing',
@@ -532,12 +529,12 @@ const detailBySlug: Record<string, Partial<TrekDetail>> = {
     slug: 'roopkund-trek',
     name: 'Roopkund Trek',
     region: 'Uttarakhand | India',
-    origin: 'Ex Kathgodam',
+    origin: 'Ex Rishikesh to Rishikesh',
     days: 8,
     difficulty: 'Moderate to Difficult',
     maxAltitude: '15,696 Ft',
     trekkingKm: '53 KM',
-    trainInfo: 'Kathgodam is the nearest rail head.',
+    trainInfo: 'Rishikesh is the nearest rail head.',
     servicesFrom: 'Lohajung to Lohajung (circle trail)',
     baseCamp: 'Lohajung',
     food: 'Meals while on trek & at Hotel/Guesthouse (Veg & Eggs)',
@@ -547,7 +544,7 @@ const detailBySlug: Record<string, Partial<TrekDetail>> = {
     servicePoints: [
       'Circle trail — camping in various locations, starting and ending at same point',
       'Base Camp: Lohajung',
-      'Rail Head: Kathgodam',
+      'Rail Head: Rishikesh',
       'Season: Summer | Autumn',
       'Months: April, May, June, September',
     ],

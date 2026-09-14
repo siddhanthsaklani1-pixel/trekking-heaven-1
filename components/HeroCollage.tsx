@@ -5,7 +5,7 @@ const HERO_COLLAGE_PHOTOS = [
   '/reviews/travelers/IMG_1302.jpg',
   '/reviews/travelers/IMG_1309.jpg',
   '/reviews/travelers/IMG_9905.jpg',
-  '/reviews/travelers/IMG_9910.jpg',
+  '/reviews/travelers/trekkers-glacier-crossing.jpg',
   '/reviews/travelers/IMG_9940.jpg',
 ];
 

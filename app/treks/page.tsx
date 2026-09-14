@@ -5,7 +5,7 @@ import HeroCollage from '@/components/HeroCollage';
 import { trekSections } from '@/lib/trek-data';
 
 export const metadata: Metadata = {
-  title: 'Himalayan Treks 2025 | Expert-Led Trekking Tours | Trekkers Heaven',
+  title: 'Himalayan Treks 2026 | Expert-Led Trekking Tours | Trekkers Heaven',
   description:
     'Explore the Himalayas with expert-led treks. Winter, summer, monsoon & autumn treks. Kedarkantha, Har Ki Dun, Kuari Pass & more. Book your Himalayan adventure.',
   openGraph: {

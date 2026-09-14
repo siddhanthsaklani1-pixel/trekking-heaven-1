@@ -32,7 +32,7 @@ export const videos: Video[] = [
   },
   {
     slug: 'himalayan-trekking-tips',
-    title: 'Hampta Pass Trek The Perfect Crossover Trek',
+    title: 'Himalayan Trekking Tips for First-Time Trekkers',
     description:
       'Essential tips for first-time trekkers. Gear, acclimatization, and what a typical day on a Himalayan trek looks like.',
     youtubeId: 'fGkdKlF7-ZQ',

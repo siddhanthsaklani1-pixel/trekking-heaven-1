@@ -20,7 +20,7 @@ export const articles: Article[] = [
     content: [
       'India is a trekker\'s paradise, with trails spanning from the mighty Himalayas in the north to the verdant hills of the south. Whether you\'re a beginner or a seasoned mountaineer, there\'s a trek that matches your skill level and thirst for adventure.',
       'Our top 10 list includes classics like Kedarkantha for winter snow lovers, Har Ki Dun for valley enthusiasts, and Kuari Pass for those seeking panoramic Himalayan views. Each trek offers unique landscapes, cultural encounters, and unforgettable memories.',
-      'Winter treks like Kedarkantha and Chopta Tungnath bring 360° snow views. Summer treks such as Har Ki Dun and Sar Pass treat you to alpine meadows and wildflowers. Monsoon treks in Hampta Pass reveal misty valleys and cascading waterfalls.',
+      'Winter treks like Kedarkantha and Chopta Tungnath bring 360° snow views. Summer treks such as Har Ki Dun and Sar Pass treat you to alpine meadows and wildflowers. Monsoon treks in the Valley of Flowers reveal misty valleys and cascading waterfalls.',
       'Planning your first trek? Start with easier trails like Kedarkantha (5 days) or Chopta Tungnath (3 days). For moderate challenges, Har Ki Dun and Kuari Pass are excellent choices. Ready for the ultimate test? Consider the Everest Base Camp trek from Nepal or our Black Peak Kalanag expedition.',
       'At Trekkers Heaven, we guide thousands of trekkers every year. Our expert local guides, small batch sizes, and safety-first approach ensure you have the adventure of a lifetime. Ready to explore? Browse our treks and find your perfect trail.',
     ],
@@ -147,7 +147,7 @@ export const articles: Article[] = [
     readTime: '5 min read',
     content: [
       'Monsoon trekking isn\'t for everyone—but for those who embrace rain and mist, it\'s unforgettable. The Himalayas turn emerald green. Waterfalls cascade everywhere. Rhododendrons and wildflowers bloom. And crowds thin out significantly.',
-      'Choose trails wisely. Rain-shadow regions like Spiti, Ladakh, and parts of Himachal see less rain. Hampta Pass, Bhrigu Lake, and Sar Pass are monsoon-friendly. Avoid Uttarakhand\'s heavy-rain zones during peak July.',
+      'Choose trails wisely. Rain-shadow regions like Spiti, Ladakh, and parts of Himachal see less rain. Bhrigu Lake and Sar Pass are monsoon-friendly. Avoid Uttarakhand\'s heavy-rain zones during peak July.',
       'Waterproof everything: rain jacket, rain cover for your backpack, dry bags for clothes and electronics. Quick-dry clothing helps. Trekking poles add stability on slippery trails.',
       'Expect leeches in forest sections—long socks and salt help. Trails can be muddy; sturdy shoes with good grip are essential. Our monsoon batches are smaller, and we plan flexible itineraries for weather.',
       'If you seek solitude and raw natural beauty, monsoon trekking is for you. At Trekkers Heaven, we run select monsoon treks with experienced guides who know the trails in all conditions. The mountains never look more alive.',
