@@ -70,7 +70,7 @@ const STANDARD_RENTAL_GEAR: RentalItem[] = [
   { name: 'Backpack (60L)', price: '₹ 500', image: '/rental-gears/back-pack.jpeg' },
 ];
 
-const detailBySlug: Record<string, Partial<TrekDetail>> = {
+export const detailBySlug: Record<string, Partial<TrekDetail>> = {
   'kedarkantha-trek': {
     slug: 'kedarkantha-trek',
     name: 'Kedarkantha Trek',
@@ -562,7 +562,12 @@ import { getTrekBySlugFromDb, getAllTreksFromDb } from './treks';
 
 export async function getTrekBySlug(slug: string): Promise<Trek | null> {
   const trekDb = await getTrekBySlugFromDb(slug);
-  if (trekDb) return trekDb;
+  if (trekDb) {
+    return {
+      ...trekDb,
+      id: trekDb.id || trekDb._id || trekDb.slug,
+    };
+  }
 
   for (const section of trekSections) {
     const trek = section.treks.find((t) => t.slug === slug);
@@ -576,6 +581,7 @@ export async function getTrekDetailBySlug(slug: string): Promise<TrekDetail | nu
   if (trekDb) {
     return {
       ...trekDb,
+      id: trekDb.id || trekDb._id || trekDb.slug,
       gallery: trekDb.gallery && trekDb.gallery.length > 0 ? trekDb.gallery : [trekDb.image],
       region: trekDb.region ?? trekDb.origin,
       maxAltitude: trekDb.maxAltitude ?? '—',

@@ -16,7 +16,7 @@ const STATIC_ROUTES = [
   { path: '/policies', priority: 0.3, changeFrequency: 'yearly' as const },
 ];
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const now = new Date();
 
   const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((route) => ({
@@ -26,7 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: route.priority,
   }));
 
-  const trekEntries: MetadataRoute.Sitemap = getAllTrekSlugs().map((slug) => ({
+  const trekSlugs = await getAllTrekSlugs();
+  const trekEntries: MetadataRoute.Sitemap = trekSlugs.map((slug) => ({
     url: `${SITE_URL}/treks/${slug}`,
     lastModified: now,
     changeFrequency: 'weekly',

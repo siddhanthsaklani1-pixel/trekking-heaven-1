@@ -5,7 +5,8 @@ import { detailBySlug, type TrekDetail, type ItineraryDay } from './trek-detail-
 
 export const TREKS_COLLECTION = 'treks';
 
-export interface FullTrek extends TrekDetail {
+export interface FullTrek extends Omit<TrekDetail, 'id'> {
+  id?: string;
   _id?: string;
   sections?: string[]; // e.g. ['winter-treks', 'upcoming-treks']
   createdAt?: string;
@@ -45,7 +46,7 @@ export function getDefaultTreks(): FullTrek[] {
 export async function getAllTreksFromDb(): Promise<FullTrek[]> {
   try {
     const db = await getDb();
-    const docs = await db.collection<FullTrek>(TREKS_COLLECTION).find({}).toArray();
+    const docs = (await db.collection(TREKS_COLLECTION).find({}).toArray()) as any[];
 
     if (docs && docs.length > 0) {
       return docs.map((doc) => ({
@@ -63,7 +64,7 @@ export async function getAllTreksFromDb(): Promise<FullTrek[]> {
 /** Seeds default treks into MongoDB if collection is empty or forced */
 export async function seedTreksCollection(force = false): Promise<{ count: number }> {
   const db = await getDb();
-  const collection = db.collection<FullTrek>(TREKS_COLLECTION);
+  const collection = db.collection(TREKS_COLLECTION);
   const count = await collection.countDocuments({});
 
   if (count > 0 && !force) {
@@ -78,16 +79,17 @@ export async function seedTreksCollection(force = false): Promise<{ count: numbe
   const now = new Date().toISOString();
 
   const docsToInsert = defaultTreks.map((trek) => {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { id, _id, ...rest } = trek;
+    const doc = { ...trek } as Record<string, any>;
+    delete doc.id;
+    delete doc._id;
     return {
-      ...rest,
+      ...doc,
       createdAt: now,
       updatedAt: now,
     };
   });
 
-  const result = await collection.insertMany(docsToInsert as unknown as FullTrek[]);
+  const result = await collection.insertMany(docsToInsert as any[]);
   return { count: result.insertedCount };
 }
 
@@ -95,7 +97,7 @@ export async function seedTreksCollection(force = false): Promise<{ count: numbe
 export async function getTrekBySlugFromDb(slug: string): Promise<FullTrek | null> {
   try {
     const db = await getDb();
-    const doc = await db.collection<FullTrek>(TREKS_COLLECTION).findOne({ slug });
+    const doc = (await db.collection(TREKS_COLLECTION).findOne({ slug })) as any;
     if (doc) {
       return {
         ...doc,
@@ -114,7 +116,7 @@ export async function getTrekBySlugFromDb(slug: string): Promise<FullTrek | null
 export async function getTrekByIdFromDb(id: string): Promise<FullTrek | null> {
   if (!ObjectId.isValid(id)) return null;
   const db = await getDb();
-  const doc = await db.collection<FullTrek>(TREKS_COLLECTION).findOne({ _id: new ObjectId(id) as unknown as Filter<FullTrek> });
+  const doc = (await db.collection(TREKS_COLLECTION).findOne({ _id: new ObjectId(id) })) as any;
   if (!doc) return null;
   return {
     ...doc,
@@ -136,6 +138,7 @@ export async function createTrekInDb(input: Omit<FullTrek, '_id' | 'id'>): Promi
   const result = await db.collection(TREKS_COLLECTION).insertOne(docToInsert);
   return {
     ...docToInsert,
+    id: result.insertedId.toString(),
     _id: result.insertedId.toString(),
   };
 }
@@ -144,8 +147,9 @@ export async function createTrekInDb(input: Omit<FullTrek, '_id' | 'id'>): Promi
 export async function updateTrekInDb(id: string, updates: Partial<FullTrek>): Promise<boolean> {
   if (!ObjectId.isValid(id)) return false;
   const db = await getDb();
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { _id, id: tempId, ...cleanUpdates } = updates;
+  const cleanUpdates = { ...updates } as Record<string, any>;
+  delete cleanUpdates._id;
+  delete cleanUpdates.id;
 
   const result = await db.collection(TREKS_COLLECTION).updateOne(
     { _id: new ObjectId(id) },
