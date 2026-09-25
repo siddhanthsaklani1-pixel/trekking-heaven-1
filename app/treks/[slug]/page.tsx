@@ -47,14 +47,15 @@ interface TrekDetailPageProps {
 }
 
 export async function generateStaticParams() {
-  return getAllTrekSlugs().map((slug) => ({ slug }));
+  const slugs = await getAllTrekSlugs();
+  return slugs.map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
   params,
 }: TrekDetailPageProps): Promise<Metadata> {
   const { slug } = await params;
-  const trek = getTrekDetailBySlug(slug);
+  const trek = await getTrekDetailBySlug(slug);
   if (!trek) return { title: 'Trek Not Found' };
   return {
     title: `${trek.name} | Trekkers Heaven`,
@@ -69,7 +70,7 @@ export async function generateMetadata({
 
 export default async function TrekDetailPage({ params }: TrekDetailPageProps) {
   const { slug } = await params;
-  const trek = getTrekDetailBySlug(slug);
+  const trek = await getTrekDetailBySlug(slug);
 
   if (!trek) notFound();
 

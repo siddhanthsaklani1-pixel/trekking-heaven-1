@@ -558,7 +558,12 @@ const detailBySlug: Record<string, Partial<TrekDetail>> = {
   },
 };
 
-export function getTrekBySlug(slug: string): Trek | null {
+import { getTrekBySlugFromDb, getAllTreksFromDb } from './treks';
+
+export async function getTrekBySlug(slug: string): Promise<Trek | null> {
+  const trekDb = await getTrekBySlugFromDb(slug);
+  if (trekDb) return trekDb;
+
   for (const section of trekSections) {
     const trek = section.treks.find((t) => t.slug === slug);
     if (trek) return trek;
@@ -566,8 +571,45 @@ export function getTrekBySlug(slug: string): Trek | null {
   return null;
 }
 
-export function getTrekDetailBySlug(slug: string): TrekDetail | null {
-  const trek = getTrekBySlug(slug);
+export async function getTrekDetailBySlug(slug: string): Promise<TrekDetail | null> {
+  const trekDb = await getTrekBySlugFromDb(slug);
+  if (trekDb) {
+    return {
+      ...trekDb,
+      gallery: trekDb.gallery && trekDb.gallery.length > 0 ? trekDb.gallery : [trekDb.image],
+      region: trekDb.region ?? trekDb.origin,
+      maxAltitude: trekDb.maxAltitude ?? '—',
+      trekkingKm: trekDb.trekkingKm ?? '—',
+      pickupPoint: trekDb.pickupPoint ?? trekDb.origin,
+      dropPoint: trekDb.dropPoint ?? trekDb.origin,
+      reportingTime: trekDb.reportingTime ?? '—',
+      droppingTime: trekDb.droppingTime ?? '—',
+      trainInfo: trekDb.trainInfo ?? 'Contact us for travel details.',
+      servicesFrom: trekDb.servicesFrom ?? trekDb.origin,
+      baseCamp: trekDb.baseCamp ?? '—',
+      food: trekDb.food ?? 'All Meals',
+      stay: trekDb.stay ?? 'Camping',
+      bestSeason: trekDb.bestSeason ?? '—',
+      priceStrikethrough: trekDb.priceStrikethrough,
+      pricePerPerson: trekDb.pricePerPerson ?? 'On request',
+      priceNote: trekDb.priceNote,
+      discountBadge: trekDb.discountBadge,
+      servicePoints: trekDb.servicePoints ?? [trekDb.origin],
+      itinerary: trekDb.itinerary,
+      highlights: trekDb.highlights,
+      whoCanParticipate: trekDb.whoCanParticipate,
+      howToReach: trekDb.howToReach,
+      season: trekDb.season,
+      months: trekDb.months,
+      trailType: trekDb.trailType,
+      railHead: trekDb.railHead,
+      airport: trekDb.airport,
+      pdfUrl: trekDb.pdfUrl,
+      rentalGear: trekDb.rentalGear,
+    };
+  }
+
+  const trek = await getTrekBySlug(slug);
   if (!trek) return null;
 
   const extra = detailBySlug[slug];
@@ -608,7 +650,16 @@ export function getTrekDetailBySlug(slug: string): TrekDetail | null {
   };
 }
 
-export function getAllTrekSlugs(): string[] {
+export async function getAllTrekSlugs(): Promise<string[]> {
+  try {
+    const dbTreks = await getAllTreksFromDb();
+    if (dbTreks.length > 0) {
+      return Array.from(new Set(dbTreks.map((t) => t.slug)));
+    }
+  } catch (err) {
+    console.warn('Fallback in getAllTrekSlugs', err);
+  }
+
   const slugs = new Set<string>();
   for (const section of trekSections) {
     for (const trek of section.treks) {
@@ -617,3 +668,4 @@ export function getAllTrekSlugs(): string[] {
   }
   return Array.from(slugs);
 }
+

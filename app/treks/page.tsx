@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import TrekSection from '@/components/TrekSection';
 import HeroCollage from '@/components/HeroCollage';
-import { trekSections } from '@/lib/trek-data';
+import { getDynamicTrekSections } from '@/lib/treks';
 
 export const metadata: Metadata = {
   title: 'Himalayan Treks 2026 | Expert-Led Trekking Tours | Trekkers Heaven',
@@ -15,7 +15,9 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TreksPage() {
+export default async function TreksPage() {
+  const sections = await getDynamicTrekSections();
+
   return (
     <main className="treks-page">
       {/* Hero Section */}
@@ -38,7 +40,7 @@ export default function TreksPage() {
 
       {/* Trek Sections */}
       <div className="treks-content">
-        {trekSections.map((section) => (
+        {sections.map((section) => (
           <TrekSection key={section.id} section={section} />
         ))}
       </div>
