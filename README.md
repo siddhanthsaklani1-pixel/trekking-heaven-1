@@ -66,3 +66,7 @@ trekkers-heaven/
 - **Colors** — Forest green `#1b5e3f`, dark grey text, blue accents
 - **Typography** — Plus Jakarta Sans
 - **Layout** — Card-based grid, responsive
+
+# Development and Contribution
+
+## Author=Aditya_Tonk
