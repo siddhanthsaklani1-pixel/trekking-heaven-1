@@ -46,18 +46,32 @@ export default function Footer() {
           <div className="footer-badges">
             <h4>Certifications</h4>
             <div className="footer-cert-row">
+              <a
+                href="/uttarakhand-tourism-cert.jpg"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="View Uttarakhand Tourism registration certificate (opens full size)"
+              >
+                <Image
+                  src="/uttarakhand-tourism-cert.jpg"
+                  alt="Uttarakhand Tourism Development Board - Registered Travel Agent"
+                  width={378}
+                  height={529}
+                  className="footer-badge-img footer-badge-cert"
+                />
+              </a>
               <Image
-                src="/himachal-tourism-logo-cert.png"
-                alt="Himachal Tourism Registered"
-                width={80}
-                height={74}
+                src="/msme-govt-logo.jpg"
+                alt="Government of India - MSME Registered"
+                width={499}
+                height={375}
                 className="footer-badge-img"
               />
               <Image
-                src="/msme-logo-cert.png"
-                alt="MSME / Udyam Registered"
-                width={120}
-                height={17}
+                src="/udyam-registration-logo.jpg"
+                alt="Udyam Registration Certified"
+                width={682}
+                height={449}
                 className="footer-badge-img"
               />
             </div>

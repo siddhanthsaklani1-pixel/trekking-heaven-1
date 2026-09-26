@@ -56,27 +56,32 @@ export async function POST(request: NextRequest) {
   const history = parsed.data.messages.slice(-MAX_HISTORY);
 
   try {
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          systemInstruction: {
-            parts: [{ text: buildSystemPrompt() }],
-          },
-          contents: history.map((m) => ({
-            role: m.role === 'assistant' ? 'model' : 'user',
-            parts: [{ text: m.content }],
-          })),
-          generationConfig: {
-            temperature: 0.5,
-            maxOutputTokens: 400,
-          },
-        }),
-        signal: AbortSignal.timeout(20000),
-      }
-    );
+    const systemPrompt = await buildSystemPrompt();
+
+    const callGemini = (maxOutputTokens: number) =>
+      fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent?key=${apiKey}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            systemInstruction: {
+              parts: [{ text: systemPrompt }],
+            },
+            contents: history.map((m) => ({
+              role: m.role === 'assistant' ? 'model' : 'user',
+              parts: [{ text: m.content }],
+            })),
+            generationConfig: {
+              temperature: 0.5,
+              maxOutputTokens,
+            },
+          }),
+          signal: AbortSignal.timeout(30000),
+        }
+      );
+
+    let geminiRes = await callGemini(1536);
 
     if (!geminiRes.ok) {
       const errText = await geminiRes.text().catch(() => '');
@@ -84,8 +89,23 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ reply: FALLBACK_MESSAGE }, { status: 200 });
     }
 
-    const data = await geminiRes.json();
-    const reply: string | undefined = data?.candidates?.[0]?.content?.parts?.[0]?.text;
+    let data = await geminiRes.json();
+    let candidate = data?.candidates?.[0];
+
+    // If the model got cut off mid-answer (hit the token cap), retry once with
+    // a much bigger budget instead of returning a half-finished message.
+    if (candidate?.finishReason === 'MAX_TOKENS') {
+      const retryRes = await callGemini(3072);
+      if (retryRes.ok) {
+        const retryData = await retryRes.json();
+        if (retryData?.candidates?.[0]?.content?.parts?.[0]?.text) {
+          data = retryData;
+          candidate = retryData.candidates[0];
+        }
+      }
+    }
+
+    const reply: string | undefined = candidate?.content?.parts?.[0]?.text;
 
     if (!reply) {
       const blockReason = data?.promptFeedback?.blockReason;

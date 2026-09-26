@@ -5,8 +5,8 @@ import sharp from 'sharp';
 
 export const runtime = 'nodejs';
 
-// Max file size allowed for upload: 5 MB (before compression)
-const MAX_FILE_SIZE = 5 * 1024 * 1024;
+// Max file size allowed for upload: 3 MB (before compression)
+const MAX_FILE_SIZE = 3 * 1024 * 1024;
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 export async function POST(request: NextRequest) {
@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
 
     if (file.size > MAX_FILE_SIZE) {
       return NextResponse.json(
-        { error: 'File size exceeds 5MB limit. Please upload a smaller photo.' },
+        { error: 'File size exceeds 3MB limit. Please upload a smaller photo.' },
         { status: 400 }
       );
     }

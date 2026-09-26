@@ -14,6 +14,7 @@ import {
   Check,
   Calendar,
   Mountain,
+  UploadCloud,
 } from 'lucide-react';
 import type { FullTrek } from '@/lib/treks';
 import type { ItineraryDay } from '@/lib/trek-detail-data';
@@ -92,6 +93,51 @@ export default function TreksTable() {
   // Temporary input helpers for bullet lists
   const [newHighlight, setNewHighlight] = useState('');
 
+  // Image upload state
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
+
+  const MAX_IMAGE_BYTES = 3 * 1024 * 1024; // 3 MB
+  const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
+
+  const handleImageFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    e.target.value = ''; // allow re-selecting the same file later
+    if (!file) return;
+
+    setUploadError(null);
+
+    if (!ALLOWED_IMAGE_TYPES.includes(file.type)) {
+      setUploadError('Only JPEG, PNG, or WebP images are allowed.');
+      return;
+    }
+    if (file.size > MAX_IMAGE_BYTES) {
+      setUploadError('Image is too large. Please choose a photo up to 3MB.');
+      return;
+    }
+
+    setUploadingImage(true);
+    try {
+      const body = new FormData();
+      body.append('file', file);
+      body.append('slug', formData.slug || 'trek');
+
+      const res = await fetch('/api/admin/upload', { method: 'POST', body });
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Upload failed');
+      }
+
+      setFormData((prev) => ({ ...prev, image: data.url }));
+    } catch (err) {
+      console.error(err);
+      setUploadError(err instanceof Error ? err.message : 'Failed to upload image');
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   const fetchTreks = useCallback(async () => {
     setLoading(true);
     try {
@@ -118,6 +164,7 @@ export default function TreksTable() {
     setEditingTrek(null);
     setFormData(EMPTY_FORM);
     setActiveTab('basic');
+    setUploadError(null);
     setModalOpen(true);
   };
 
@@ -150,6 +197,7 @@ export default function TreksTable() {
       itinerary: trek.itinerary || [],
     });
     setActiveTab('basic');
+    setUploadError(null);
     setModalOpen(true);
   };
 
@@ -582,13 +630,44 @@ export default function TreksTable() {
                   </div>
 
                   <div className="form-group">
-                    <label>Card Image Path / URL</label>
-                    <input
-                      type="text"
-                      value={formData.image}
-                      onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                      placeholder="/treks-cards-images/kedarkantha-trek.jpg"
-                    />
+                    <label>Trek Card Image (one photo, up to 3MB)</label>
+                    <div className="image-upload-row">
+                      {formData.image && (
+                        <div className="image-upload-preview">
+                          <Image
+                            src={formData.image}
+                            alt="Trek image preview"
+                            width={90}
+                            height={70}
+                            unoptimized
+                            className="object-cover rounded"
+                          />
+                        </div>
+                      )}
+                      <div className="image-upload-controls">
+                        <label className="btn-secondary-admin image-upload-btn">
+                          <UploadCloud size={16} />
+                          <span>{uploadingImage ? 'Uploading...' : 'Upload Photo'}</span>
+                          <input
+                            type="file"
+                            accept="image/jpeg,image/png,image/webp"
+                            onChange={handleImageFileChange}
+                            disabled={uploadingImage}
+                            hidden
+                          />
+                        </label>
+                        <input
+                          type="text"
+                          value={formData.image}
+                          onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                          placeholder="/treks-cards-images/kedarkantha-trek.jpg"
+                        />
+                      </div>
+                    </div>
+                    {uploadError && <p className="form-error-text">{uploadError}</p>}
+                    <p className="form-hint-text">
+                      Uploading a photo replaces the current image and goes live on the website as soon as you save.
+                    </p>
                   </div>
 
                   <div className="form-group">
@@ -714,13 +793,16 @@ export default function TreksTable() {
                   </div>
 
                   <div className="form-group">
-                    <label>PDF Brochure Link (Google Drive / PDF URL)</label>
+                    <label>Trek Info PDF Link (Google Drive / PDF URL)</label>
                     <input
                       type="url"
                       value={formData.pdfUrl}
                       onChange={(e) => setFormData({ ...formData, pdfUrl: e.target.value })}
                       placeholder="https://drive.google.com/..."
                     />
+                    <p className="form-hint-text">
+                      Powers the &quot;Download Detailed Itinerary PDF&quot; button on this trek&apos;s info page. Leave blank to hide the button.
+                    </p>
                   </div>
                 </div>
               )}
