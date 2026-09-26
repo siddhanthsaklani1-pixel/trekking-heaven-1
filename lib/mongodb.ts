@@ -18,10 +18,18 @@ declare global {
 const cache: MongoCache = global._mongoCache ?? { client: null, promise: null };
 if (!global._mongoCache) global._mongoCache = cache;
 
+function isValidMongoUri(uri: string | undefined): boolean {
+  if (!uri) return false;
+  if (uri.includes('<user>') || uri.includes('<cluster-url>') || uri.includes('<password>')) {
+    return false;
+  }
+  return uri.startsWith('mongodb://') || uri.startsWith('mongodb+srv://');
+}
+
 export async function getDb(): Promise<Db> {
-  if (!MONGODB_URI) {
+  if (!isValidMongoUri(MONGODB_URI)) {
     throw new Error(
-      'MONGODB_URI is not set. Add it to your environment variables to enable lead storage.'
+      'MONGODB_URI is not set or contains placeholder values. Please set a valid MongoDB connection string.'
     );
   }
 
@@ -30,8 +38,14 @@ export async function getDb(): Promise<Db> {
   }
 
   if (!cache.promise) {
-    const client = new MongoClient(MONGODB_URI);
-    cache.promise = client.connect();
+    const client = new MongoClient(MONGODB_URI!, {
+      serverSelectionTimeoutMS: 5000,
+      connectTimeoutMS: 5000,
+    });
+    cache.promise = client.connect().catch((err) => {
+      cache.promise = null;
+      throw err;
+    });
   }
 
   cache.client = await cache.promise;

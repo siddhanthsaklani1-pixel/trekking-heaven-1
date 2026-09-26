@@ -41,8 +41,11 @@ function AdminLoginForm() {
       }
 
       const from = searchParams.get('from');
-      router.push(from && from.startsWith('/admin') ? from : '/admin/leads');
-      router.refresh();
+      let target = '/admin/treks';
+      if (from && from.startsWith('/admin') && from !== '/admin' && from !== '/admin/login') {
+        target = from;
+      }
+      window.location.href = target;
     } catch {
       setError('Network error. Please try again.');
       setStatus('error');
