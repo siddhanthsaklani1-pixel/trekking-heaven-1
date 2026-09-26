@@ -47,7 +47,7 @@ const EMPTY_FORM: Omit<FullTrek, '_id' | 'id'> = {
   origin: 'Ex Dehradun to Dehradun',
   days: 5,
   difficulty: 'Easy',
-  image: '/treks-cards-images/kedarkantha-trek.jpg',
+  image: '',
   sections: ['winter-treks'],
   region: 'Uttarakhand, India',
   maxAltitude: '12,500 Ft',
@@ -176,7 +176,7 @@ export default function TreksTable() {
       origin: trek.origin || '',
       days: trek.days || 1,
       difficulty: trek.difficulty || 'Easy',
-      image: trek.image || '/treks-cards-images/kedarkantha-trek.jpg',
+      image: trek.image || '',
       note: trek.note || '',
       sections: trek.sections || ['winter-treks'],
       region: trek.region || '',
@@ -218,7 +218,12 @@ export default function TreksTable() {
   };
 
   const handleSeed = async () => {
-    if (!window.confirm('Reset/Seed default treks into database? Any deleted default treks will be re-added.')) return;
+    if (
+      !window.confirm(
+        'This deletes ALL current treks — including every price, image, and PDF edit you\'ve made — and replaces them with the original starter set. This cannot be undone. Continue?'
+      )
+    )
+      return;
     setLoading(true);
     try {
       const res = await fetch('/api/admin/treks/seed', { method: 'POST' });
@@ -318,6 +323,11 @@ export default function TreksTable() {
       alert('Please enter Name and Slug');
       return;
     }
+    if (!formData.image) {
+      setActiveTab('basic');
+      alert('Please upload a trek card image before saving');
+      return;
+    }
 
     setSaving(true);
     try {
@@ -378,10 +388,6 @@ export default function TreksTable() {
         </div>
 
         <div className="admin-toolbar-actions">
-          <button onClick={handleSeed} className="btn-secondary-admin" title="Reset default treks list">
-            <RefreshCw size={16} />
-            <span>Seed Defaults</span>
-          </button>
           <button onClick={handleOpenAdd} className="btn-primary-admin">
             <Plus size={18} />
             <span>Add New Trek</span>
@@ -399,7 +405,13 @@ export default function TreksTable() {
         <div className="admin-empty-state">
           <Mountain size={48} />
           <h3>No Treks Found</h3>
-          <p>Try clearing your search filters or click &quot;Add New Trek&quot; to create one.</p>
+          <p>Try clearing your search filters, click &quot;Add New Trek&quot; to create one, or load the original starter treks below.</p>
+          {!search && sectionFilter === 'all' && (
+            <button onClick={handleSeed} className="btn-secondary-admin" title="Load the original starter trek list">
+              <RefreshCw size={16} />
+              <span>Load Starter Treks</span>
+            </button>
+          )}
         </div>
       ) : (
         <div className="admin-table-wrapper">
@@ -482,6 +494,20 @@ export default function TreksTable() {
             </tbody>
           </table>
         </div>
+      )}
+
+      {/* Tucked-away danger zone — deliberately not in the main toolbar since this wipes all trek edits */}
+      {!loading && treks.length > 0 && (
+        <details className="admin-danger-zone">
+          <summary>Advanced</summary>
+          <div className="admin-danger-zone-body">
+            <p>Reset every trek back to the original starter list. This deletes all current treks, including any price, image, or PDF edits you&apos;ve made.</p>
+            <button onClick={handleSeed} className="btn-danger-admin">
+              <RefreshCw size={14} />
+              <span>Reset to Starter Treks</span>
+            </button>
+          </div>
+        </details>
       )}
 
       {/* Add / Edit Trek Modal */}
@@ -630,10 +656,10 @@ export default function TreksTable() {
                   </div>
 
                   <div className="form-group">
-                    <label>Trek Card Image (one photo, up to 3MB)</label>
+                    <label>Trek Card Image (one photo, up to 3MB) {!formData.image && '*'}</label>
                     <div className="image-upload-row">
-                      {formData.image && (
-                        <div className="image-upload-preview">
+                      <div className="image-upload-preview">
+                        {formData.image ? (
                           <Image
                             src={formData.image}
                             alt="Trek image preview"
@@ -642,12 +668,14 @@ export default function TreksTable() {
                             unoptimized
                             className="object-cover rounded"
                           />
-                        </div>
-                      )}
+                        ) : (
+                          <div className="image-upload-preview-empty">No image yet</div>
+                        )}
+                      </div>
                       <div className="image-upload-controls">
                         <label className="btn-secondary-admin image-upload-btn">
                           <UploadCloud size={16} />
-                          <span>{uploadingImage ? 'Uploading...' : 'Upload Photo'}</span>
+                          <span>{uploadingImage ? 'Uploading...' : formData.image ? 'Replace Photo' : 'Upload Photo'}</span>
                           <input
                             type="file"
                             accept="image/jpeg,image/png,image/webp"
@@ -656,18 +684,24 @@ export default function TreksTable() {
                             hidden
                           />
                         </label>
-                        <input
-                          type="text"
-                          value={formData.image}
-                          onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                          placeholder="/treks-cards-images/kedarkantha-trek.jpg"
-                        />
+                        <p className="form-hint-text">
+                          Click to choose a photo from your device — it uploads automatically and this trek&apos;s image is set for you. No file path or URL needed.
+                        </p>
+                        <details className="advanced-image-url">
+                          <summary>Advanced: use an image URL instead</summary>
+                          <input
+                            type="text"
+                            value={formData.image}
+                            onChange={(e) => setFormData({ ...formData, image: e.target.value })}
+                            placeholder="https://example.com/photo.jpg"
+                          />
+                        </details>
                       </div>
                     </div>
                     {uploadError && <p className="form-error-text">{uploadError}</p>}
-                    <p className="form-hint-text">
-                      Uploading a photo replaces the current image and goes live on the website as soon as you save.
-                    </p>
+                    {!formData.image && (
+                      <p className="form-error-text">Please upload a photo for this trek before saving.</p>
+                    )}
                   </div>
 
                   <div className="form-group">
