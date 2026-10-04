@@ -20,6 +20,11 @@ export const metadata: Metadata = {
   },
   description:
     'Top Himalayan Treks 2026 — Adventure trekking tours with experienced local guides. Your journey to the mountains starts here.',
+  icons: {
+    icon: '/favicon.ico',
+    shortcut: '/icon.png',
+    apple: '/apple-icon.png',
+  },
   openGraph: {
     siteName: SITE_NAME,
     type: 'website',
@@ -46,7 +51,7 @@ export default function RootLayout({
     '@type': 'TravelAgency',
     name: SITE_NAME,
     url: SITE_URL,
-    logo: `${SITE_URL}/new-logo.png`,
+    logo: `${SITE_URL}/logo-primary.png`,
     telephone: PRIMARY_DISPLAY,
     email: EMAIL_ADDRESS,
     address: {

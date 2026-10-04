@@ -100,10 +100,10 @@ export default function SecondaryNav() {
       <div className="secondary-nav-inner">
         <Link href="/" className="secondary-nav-logo" aria-label="Trekkers Heaven - Explore the Unknown">
           <Image
-            src="/secondary-logo.png"
+            src="/logo-primary.png"
             alt="Trekkers Heaven - Explore the Unknown"
-            width={220}
-            height={140}
+            width={160}
+            height={130}
             className="secondary-nav-logo-img"
           />
         </Link>

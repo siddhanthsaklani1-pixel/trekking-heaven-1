@@ -48,10 +48,10 @@ export default function TrekSection({
         </h2>
         {showSecondaryLogo && (
           <Image
-            src="/secondary-logo.png"
+            src="/logo-primary.png"
             alt="Trekkers Heaven - Explore the Unknown"
-            width={190}
-            height={120}
+            width={150}
+            height={122}
             className="section-secondary-logo"
           />
         )}

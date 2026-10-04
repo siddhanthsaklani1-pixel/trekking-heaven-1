@@ -4599,8 +4599,10 @@ button:focus-visible {
   }
 
   .logo-img {
-    width: 160px;
-    height: auto;
+    height: 42px;
+    max-width: 185px;
+    width: auto;
+    object-fit: contain;
   }
 
   .trek-search-wrap {
@@ -4672,10 +4674,6 @@ button:focus-visible {
     font-size: var(--font-size-sm);
   }
 
-  .section-secondary-logo {
-    width: 120px;
-    height: auto;
-  }
 
   .section-title-row {
     flex-direction: column;
@@ -4684,9 +4682,6 @@ button:focus-visible {
     text-align: center;
   }
 
-  .logo-img {
-    height: 44px;
-  }
 
   .main-content {
     padding: var(--space-xl) var(--space-md);
@@ -4705,8 +4700,10 @@ button:focus-visible {
   }
 
   .section-secondary-logo {
-    max-height: 88px;
-    max-width: 150px;
+    max-height: 80px;
+    max-width: 130px;
+    width: auto;
+    height: auto;
   }
 
   .footer-container {

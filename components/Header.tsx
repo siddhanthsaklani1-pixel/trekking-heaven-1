@@ -44,12 +44,12 @@ export default function Header() {
   return (
     <header className="primary-nav">
       <div className="nav-container">
-        <Link href="/" className="logo">
+        <Link href="/" className="logo" aria-label="Trekkers Heaven Home">
           <Image
-            src="/new-logo.png"
-            alt="Trekkers Heaven"
-            width={220}
-            height={52}
+            src="/logo-horizontal.png"
+            alt="Trekkers Heaven - Explore the Unknown"
+            width={230}
+            height={50}
             className="logo-img"
             priority
           />
