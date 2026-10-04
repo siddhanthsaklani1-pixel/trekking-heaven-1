@@ -48,8 +48,8 @@ export default function Header() {
           <Image
             src="/logo-horizontal.png"
             alt="Trekkers Heaven - Explore the Unknown"
-            width={230}
-            height={50}
+            width={195}
+            height={42}
             className="logo-img"
             priority
           />

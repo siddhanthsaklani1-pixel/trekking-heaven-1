@@ -165,20 +165,23 @@ button:focus-visible {
 /* Trek Search (header) */
 .trek-search-wrap {
   position: relative;
-  flex: 1;
-  min-width: 0;
-  max-width: 280px;
-  margin: 0 var(--space-md);
+  flex: 0 1 210px;
+  min-width: 130px;
+  max-width: 230px;
+  margin: 0 var(--space-xs);
+  flex-shrink: 1;
 }
 
 .trek-search-input-wrap {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs);
   background: var(--color-bg-alt);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: var(--space-xs) var(--space-md);
+  padding: 6px 12px;
+  width: 100%;
+  box-sizing: border-box;
   transition:
     border-color var(--transition-fast),
     box-shadow var(--transition-fast);
@@ -197,11 +200,12 @@ button:focus-visible {
 .trek-search-input {
   flex: 1;
   min-width: 0;
+  width: 100%;
   border: none;
   background: none;
   font-size: var(--font-size-sm);
   color: var(--color-text);
-  padding: var(--space-sm) 0;
+  padding: 2px 0;
 }
 
 .trek-search-input::placeholder {
@@ -278,11 +282,12 @@ button:focus-visible {
 .nav-container {
   max-width: var(--container-max);
   margin: 0 auto;
-  padding: 0 var(--space-lg);
+  padding: 0 var(--space-md);
   height: var(--nav-height);
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: var(--space-xs);
   overflow: visible;
 }
 
@@ -293,6 +298,7 @@ button:focus-visible {
   font-size: var(--font-size-xl);
   font-weight: var(--font-weight-bold);
   color: var(--color-primary);
+  flex-shrink: 0;
 }
 
 .logo-icon {
@@ -302,23 +308,25 @@ button:focus-visible {
 }
 
 .logo-img {
-  height: 52px;
+  height: 42px;
   width: auto;
+  max-width: 195px;
   object-fit: contain;
 }
 
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: 2px;
+  flex-shrink: 0;
   overflow: visible;
 }
 
 .nav-link {
-  font-size: var(--font-size-sm);
+  font-size: 0.85rem;
   font-weight: var(--font-weight-semibold);
   color: var(--color-text);
-  padding: var(--space-sm) var(--space-sm);
+  padding: 6px 7px;
   white-space: nowrap;
   transition: color var(--transition-fast);
 }
@@ -4440,7 +4448,7 @@ button:focus-visible {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1120px) {
   .nav-links {
     position: fixed;
     top: var(--nav-height);
@@ -4516,7 +4524,9 @@ button:focus-visible {
     right: 0;
     max-height: 60vh;
   }
+}
 
+@media (max-width: 768px) {
   .hero-section {
     min-height: 380px;
     padding: var(--space-xl) var(--space-md);
