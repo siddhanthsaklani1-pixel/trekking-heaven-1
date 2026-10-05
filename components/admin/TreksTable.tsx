@@ -123,16 +123,17 @@ export default function TreksTable() {
       body.append('slug', formData.slug || 'trek');
 
       const res = await fetch('/api/admin/upload', { method: 'POST', body });
-      const data = await res.json().catch(() => null);
+      const data: { error?: unknown; url?: unknown } | null = await res.json().catch(() => null);
 
       if (!res.ok) {
-        throw new Error(data?.error || 'Unable to upload image. Please try again.');
+        const serverMessage = typeof data?.error === 'string' ? data.error : null;
+        throw new Error(serverMessage || 'Unable to upload image. Please try again.');
       }
       if (typeof data?.url !== 'string' || !data.url) {
         throw new Error('The upload completed without an image URL. Please try again.');
       }
 
-      setFormData((prev) => ({ ...prev, image: data.url }));
+      setFormData((prev) => ({ ...prev, image: data.url as string }));
     } catch (err) {
       console.error(err);
       setUploadError(err instanceof Error ? err.message : 'Failed to upload image');
