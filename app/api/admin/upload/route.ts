@@ -9,7 +9,7 @@ const MAX_FILE_SIZE = 3 * 1024 * 1024;
 const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp'];
 
 export async function POST(request: NextRequest) {
-  const blobToken = process.env.BLOB_READ_WRITE_TOKEN_READ_WRITE_TOKEN;
+  const blobToken = process.env.BLOB_READ_WRITE_TOKEN;
   if (!blobToken) {
     console.error('Trek image upload configuration error: Blob read-write token is missing.');
     return NextResponse.json(
