@@ -1,6 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server';
-import path from 'path';
-import fs from 'fs';
+import { put } from '@vercel/blob';
 import sharp from 'sharp';
 
 export const runtime = 'nodejs';
@@ -13,7 +12,8 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get('file');
-    const slug = (formData.get('slug') as string) || 'trek';
+    const slugValue = formData.get('slug');
+    const slug = typeof slugValue === 'string' ? slugValue : 'trek';
 
     if (!file || !(file instanceof File)) {
       return NextResponse.json({ error: 'No image file uploaded' }, { status: 400 });
@@ -47,19 +47,18 @@ export async function POST(request: NextRequest) {
       .toLowerCase()
       .replace(/[^a-z0-9-]/g, '')
       .slice(0, 40) || 'trek';
-    const filename = `${cleanSlug}-${Date.now()}.webp`;
+    const filename = `treks/${cleanSlug}-${Date.now()}.webp`;
 
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'treks');
-    await fs.promises.mkdir(uploadDir, { recursive: true });
-
-    const filePath = path.join(uploadDir, filename);
-    await fs.promises.writeFile(filePath, optimizedBuffer);
-
-    const publicUrl = `/uploads/treks/${filename}`;
+    const blob = await put(filename, optimizedBuffer, {
+      access: 'public',
+      contentType: 'image/webp',
+      addRandomSuffix: true,
+      token: process.env.BLOB_READ_WRITE_TOKEN_READ_WRITE_TOKEN,
+    });
 
     return NextResponse.json({
       success: true,
-      url: publicUrl,
+      url: blob.url,
       sizeBytes: optimizedBuffer.byteLength,
       sizeKb: Math.round(optimizedBuffer.byteLength / 1024),
     });
